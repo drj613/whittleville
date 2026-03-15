@@ -29,36 +29,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Handle contact form submission
+  // Handle contact form - honeypot spam check
   const contactForm = document.getElementById('contactForm');
 
   if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      // Honeypot spam protection
       const honeypot = document.getElementById('website');
       if (honeypot && honeypot.value !== '') {
-        // Bot detected - silently fail without showing error
-        console.log('Spam detected via honeypot');
+        e.preventDefault();
         return false;
       }
-
-      // Get form data
-      const formData = new FormData(contactForm);
-      const data = Object.fromEntries(formData);
-
-      // Remove honeypot from data before sending
-      delete data.website;
-
-      // In a real application, you would send this to a server
-      console.log('Form submitted:', data);
-
-      // Show success message
-      alert('Thank you for your message! We will get back to you soon.');
-
-      // Reset form
-      contactForm.reset();
     });
   }
 });
